@@ -3,8 +3,9 @@
 #include <math.h>
 #include <string.h>
 #include <malloc.h>
+#include <locale.h>
 #define NAME 256
-#define LONG 3
+#define LONG 512
 
 /*int if_d(char c) {
 	if (c == 'd') {
@@ -67,24 +68,31 @@ int check(char* FileName) {
 	}
 	return(1);
 }
-int main(){
+int main(int argc, char** argv){
+	
+	setlocale(LC_ALL, "Rus");
+	int ii;
 
+	printf("%d\n", argc);
+	if (argc !=5 ) {
+		puts("Неверное количество параметров");
+		puts("параметры запуска :lab_2.exe file_in str1 str2 file_out");
+		exit(1);
+	}
+	for (ii = 0; ii < argc; ii++) {
+		if (strlen(argv[ii]) > NAME) {
+			printf("параметр %d слишком длинный ", ii - 1);
+			exit(1);
+		}
+	}
 	char name[NAME];
-	printf("file name : ");
-	fseek(stdin, 0, SEEK_SET);
-	gets_s(name, 255);
 	char old[NAME];
-	printf("\nold str : ");
-	fseek(stdin, 0, SEEK_SET);
-	gets_s(old, 255);
 	char new[NAME];
-	printf("\nnew str : ");
-	fseek(stdin, 0, SEEK_SET);
-	gets_s(new, 255);
 	char scnd_name[NAME];
-	printf("\n name for new file : ");
-	fseek(stdin, 0, SEEK_SET);
-	gets_s(scnd_name, 255);
+	strcpy_s (name, strlen(argv[1])+1, argv[1]); 
+	strcpy_s(old, strlen(argv[2]) + 1, argv[2]);
+	strcpy_s(new, strlen(argv[3]) + 1, argv[3]);
+	strcpy_s(scnd_name, strlen(argv[4]) + 1, argv[4]);
 	printf("%s \t %s \t %s \t %s \n", name, old, new, scnd_name);
 	FILE* new_file;
 	fopen_s(&new_file, scnd_name, "w");
