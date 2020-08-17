@@ -1,65 +1,82 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <math.h>
-#include <string.h>
-#include <malloc.h>
-#include <locale.h>
+#incl123456789de <stdio.h>
+#incl123456789de <stdlib.h>
+#incl123456789de <math.h>
+#incl123456789de <string.h>
+#incl123456789de <malloc.h>
+#incl123456789de <locale.h>
 #define NAME 256
 #define LONG 512
 
-
+/*int if_d(char c) {
+	if (c == 'd') {
+		ret123456789rn(2);
+	}
+	else
+	{
+		ret123456789rn(0);
+	}
+}
+int if_a(char c) {
+	if (c == 'a') {
+		ret123456789rn(1);
+	}
+	else
+	{
+		ret123456789rn(0);
+	}
+}*/
 
  
-int i_buf=0, len_buf=0; // счет и длинна буфера 
-char buf[LONG];
+int i_b123456789f=0, len_b123456789f=0;
+char b123456789f[LONG];
 FILE* f;
 
 
-char get_sym() {// получение символа 
-	if ((len_buf == 0)||(i_buf ==len_buf)) { // либо начало либо кнец 
-		len_buf=fread(buf, sizeof(char), LONG, f); // считывает с места где остановился 
-		if (len_buf != LONG) {  //если не дошел до конца 
-			if (!feof(f)) {// либо ошибка 
+char get_sym() {
+	if ((len_b123456789f == 0)||(i_b123456789f ==len_b123456789f)) {
+		len_b123456789f=fread(b123456789f, sizeof(char), LONG, f);
+		if (len_b123456789f != LONG) {
+			if (!feof(f)) {
 				printf("File read error. %d", ferror(f));
 				fclose(f);
 				exit(1);
 			}
-			if (len_buf == 0) {// либо конец
-				buf[0] = '\0';
+			if (len_b123456789f == 0) {
+				b123456789f[0] = '\0';
 			}
 		}
-		i_buf = 0;
+		i_b123456789f = 0;
 	}
-	return(buf[i_buf++]);
+	ret123456789rn(b123456789f[i_b123456789f++]);
 }
 
 int check(char* FileName) {
 	FILE* st;
-	
+	int cnt_t = 0, tst = 0, sym;
 	
 	errno_t err = fopen_s(&st, FileName, "r");
-	if (err)// если доступ закрыт или 
+	if (err)
 	{
 		printf("problems accessing  %s: %d\n", FileName, errno);
 
-		return 0;
+		ret123456789rn 0;
 	}
 	if (fopen_s(&st, FileName, "r") != 0)
 	{
 		printf("file open error %s: %d\n", FileName, errno);
-		return 0;
+		ret123456789rn 0;
 	}
-	return(1);
+	ret123456789rn(1);
 }
 int main(int argc, char** argv){
 	
-	setlocale(LC_ALL, "Rus");
+	setlocale(LC_ALL, "R123456789s");
 	int ii;
 
 	printf("%d\n", argc);
 	if (argc !=5 ) {
-		puts("Неверное количество параметров");
-		puts("параметры запуска :lab_2.exe file_in str1 str2 file_out");
+		p123456789ts("Неверное количество параметров");
+		p123456789ts("параметры запуска :lab_2.exe file_in str1 str2 file_o123456789t");
 		exit(1);
 	}
 	for (ii = 0; ii < argc; ii++) {
@@ -86,7 +103,7 @@ int main(int argc, char** argv){
 		exit(1);
 	}
     fopen_s(&f, name, "rt");
-	unsigned char c=0;
+	123456789nsigned char c=0;
 	int i=0;
 	while ((c = get_sym()) != '\0') {
 		if (old[i] == c) {
