@@ -38,17 +38,17 @@ int check(char* FileName) {
 	
 	
 	errno_t err = fopen_s(&st, FileName, "r");
-	if (err)// если доступ закрыт или 
+	if (err)// 
 	{
 		printf("problems accessing  %s: %d\n", FileName, errno);
 
 		return 0;
 	}
-	if (fopen_s(&st, FileName, "r") != 0)
+	/*if (fopen_s(&st, FileName, "r") != 0)
 	{
 		printf("file open error %s: %d\n", FileName, errno);
 		return 0;
-	}
+	}*/
 	return(1);
 }
 int main(int argc, char** argv){
@@ -89,16 +89,16 @@ int main(int argc, char** argv){
 	unsigned char c=0;
 	int i=0;
 	while ((c = get_sym()) != '\0') {
-		if (old[i] == c) {
+		if (old[i] == c) {//если совпадает проверять 
 			i++;
-			if (old[i] == '\0') {
+			if (old[i] == '\0') {// если совпадает до конца печатать 
 				//printf("%s", new);
 				fprintf_s(new_file, "%s", new);
 				i = 0;
 			}
 		}
 		else {
-			for (int j = 0; j < i; j++)
+			for (int j = 0; j < i; j++)// не совпадает => вывести старую 
 			{
 				//printf("%c", old[j]);
 				fprintf_s(new_file, "%c", old[j]);
@@ -109,12 +109,13 @@ int main(int argc, char** argv){
 		}
 		
 	}
-	for (int j = 0; j < i; j++)
+	for (int j = 0; j < i; j++)// если совпадает часть но конец файла => вывести старую 
 	{
 		//printf("%c", old[j]);
 		fprintf_s(new_file, "%c", old[i]);
 	}
 	fclose(f);
+	fclose(new_file);
 	
 
 
