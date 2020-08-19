@@ -13,6 +13,7 @@
 int i_buf=0, len_buf=0; // счет и длинна буфера 
 char buf[LONG];
 FILE* f;
+FILE* new_file;
 
 
 char get_sym() {// получение символа 
@@ -22,6 +23,7 @@ char get_sym() {// получение символа
 			if (!feof(f)) {// либо ошибка 
 				printf("File read error. %d", ferror(f));
 				fclose(f);
+				fclose(new_file);
 				exit(1);
 			}
 			if (len_buf == 0) {// либо конец
@@ -77,7 +79,7 @@ int main(int argc, char** argv){
 	strcpy_s(new, strlen(argv[3]) + 1, argv[3]);
 	strcpy_s(scnd_name, strlen(argv[4]) + 1, argv[4]);
 	printf("%s \t %s \t %s \t %s \n", name, old, new, scnd_name);
-	FILE* new_file;
+	
 	fopen_s(&new_file, scnd_name, "w");
 
 	int res;
