@@ -21,15 +21,17 @@ FILE* new_file;
 
 
 char get_sym() {// получение символа 
-	
-	if ((len_Tbuf == 0) || (i_Tbuf == len_Tbuf)) { // либо начало либо кoнец 
+	printf("len_Tbuf: %d , i_Tbuf:%d\n",len_Tbuf,i_Tbuf);
+	if ((len_Tbuf == 0) || (i_Tbuf == len_Tbuf)) { 
 		if (len_Tbuf != 0) {
 			len_Tbuf = 0;
 			i_Tbuf = 0;
+			printf("len_Tbuf: %d , i_Tbuf:%d\n", len_Tbuf, i_Tbuf);
 		}
 	}
 	else {
-		return(Tbuf[i_Tbuf++]);
+		printf("Tbuf > %c %x\n", Tbuf[i_Tbuf], Tbuf[i_Tbuf]);
+	    return(Tbuf[i_Tbuf++]);
 	}
 	
 	if ((len_buf == 0)||(i_buf ==len_buf)) { // либо начало либо кoнец 
@@ -116,21 +118,30 @@ int main(int argc, char** argv){
 			}
 		}
 		else {
+			printf("%c!=%c\n",old[i],c);
 			if (i > 0) {
 				fprintf_s(new_file, "%c", old[0]);
+				printf("out>: %c\n", old[0]);
 				d = 0;
-				if ((i_Tbuf == 0) && (len_Tbuf == 0)) {
+				if (i_Tbuf == len_Tbuf ) {
 						d = -1;
+						
+						if (len_Tbuf != 0) { 
+							len_Tbuf = 0;
+							i_Tbuf = 0;
+							printf("len_Tbuf: %d , i_Tbuf:%d\n", len_Tbuf, i_Tbuf);
+						}
 			    }
 				for (int j = 1; j < i; j++)
 				{
 
 					Tbuf[i_Tbuf + j+d] = old[j];
 					len_Tbuf++;
-					//printf("%c", old[j]);
+					printf(">Tbuf: %c %d\n", old[j], i_Tbuf + j + d);
 
 				}
 				Tbuf[i_Tbuf + i+d] = c;
+				printf(">Tbuf: %c %d\n", c, i_Tbuf + i + d);
 				len_Tbuf++;
 				
 				i = 0;
@@ -138,6 +149,7 @@ int main(int argc, char** argv){
 			}
 			else {
 				fprintf_s(new_file, "%c", c);
+				printf("out: %c\n",c);
 			}
 		}
 		
@@ -146,6 +158,7 @@ int main(int argc, char** argv){
 	{
 		//printf("%c", old[j]);
 		fprintf_s(new_file, "%c", old[i]);
+		printf("out_2: %c\n", old[i]);
 	}
 	fclose(f);
 	fclose(new_file);
