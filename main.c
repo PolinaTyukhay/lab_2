@@ -13,7 +13,7 @@
 int i_buf=0, len_buf=0; // счет и длинна буфера 
 char buf[LONG];
 
-int i_Tbuf = 0, len_Tbuf = 0; // счет и длинна буфера 
+int i_Tbuf = 0; // счет и длинна буфера 
 char Tbuf[LONG];
 
 FILE* f;
@@ -21,17 +21,11 @@ FILE* new_file;
 
 
 char get_sym() {// получение символа 
-	printf("len_Tbuf: %d , i_Tbuf:%d\n",len_Tbuf,i_Tbuf);
-	if ((len_Tbuf == 0) || (i_Tbuf == len_Tbuf)) { 
-		if (len_Tbuf != 0) {
-			len_Tbuf = 0;
-			i_Tbuf = 0;
-			printf("len_Tbuf: %d , i_Tbuf:%d\n", len_Tbuf, i_Tbuf);
-		}
-	}
-	else {
-		printf("Tbuf > %c %x\n", Tbuf[i_Tbuf], Tbuf[i_Tbuf]);
-	    return(Tbuf[i_Tbuf++]);
+	//printf("len_Tbuf: %d , i_Tbuf:%d\n",len_Tbuf,i_Tbuf);
+	if (i_Tbuf>0 ) { 
+	
+		//printf("Tbuf > %c %x\n", Tbuf[i_Tbuf], Tbuf[i_Tbuf]);
+	    return(Tbuf[--i_Tbuf]);
 	}
 	
 	if ((len_buf == 0)||(i_buf ==len_buf)) { // либо начало либо кoнец 
@@ -51,7 +45,10 @@ char get_sym() {// получение символа
 	}
 	return(buf[i_buf++]);
 }
-
+void save_Tbuf(char c ){
+	printf("save:%c %d\n", c, i_Tbuf);
+	Tbuf[i_Tbuf++] = c; 
+}
 int check(char* FileName) {
 	FILE* st;
 	
@@ -122,28 +119,16 @@ int main(int argc, char** argv){
 			if (i > 0) {
 				fprintf_s(new_file, "%c", old[0]);
 				printf("out>: %c\n", old[0]);
-				d = 0;
-				if (i_Tbuf == len_Tbuf ) {
-						d = -1;
-						
-						if (len_Tbuf != 0) { 
-							len_Tbuf = 0;
-							i_Tbuf = 0;
-							printf("len_Tbuf: %d , i_Tbuf:%d\n", len_Tbuf, i_Tbuf);
-						}
-			    }
-				for (int j = 1; j < i; j++)
+				save_Tbuf(c);
+				
+				for (int j = i-1; j >0; j--)
 				{
-
-					Tbuf[i_Tbuf + j+d] = old[j];
-					len_Tbuf++;
-					printf(">Tbuf: %c %d\n", old[j], i_Tbuf + j + d);
+					save_Tbuf(old[j]);
+					//printf(">Tbuf: %c %d\n", old[j], i_Tbuf + j + d);
 
 				}
-				Tbuf[i_Tbuf + i+d] = c;
-				printf(">Tbuf: %c %d\n", c, i_Tbuf + i + d);
-				len_Tbuf++;
 				
+				//printf(">Tbuf: %c %d\n", c, i_Tbuf + i + d);		
 				i = 0;
 			
 			}
@@ -154,11 +139,12 @@ int main(int argc, char** argv){
 		}
 		
 	}
+
 	for (int j = 0; j < i; j++)// если совпадает часть но конец файла => вывести старую 
 	{
-		//printf("%c", old[j]);
-		fprintf_s(new_file, "%c", old[i]);
-		printf("out_2: %c\n", old[i]);
+		//printf("end:%c", old[j]);
+		fprintf_s(new_file, "%c", old[j]);
+		printf("out_2: %c\n", old[j]);
 	}
 	fclose(f);
 	fclose(new_file);
